@@ -1,0 +1,17 @@
+maze_world_movies_homepage:
+    path:     /
+    defaults: { _controller: MazeWorldMoviesBundle:Default:index }
+admin_login:
+    path:     /login
+    defaults: { _controller: MazeWorldMoviesBundle:Security:login }
+admin_login_check:
+    path: /login_check
+admin_logout:
+    path: /logout
+forgot_password:
+    path:     /forgot-password
+    defaults: { _controller: "MazeWorldMoviesBundle:Admin/Security:forgotPassword" }
+reset_password:
+    path:     /reset/{passwordResetCode}/password
+    defaults: { _controller: "MazeWorldMoviesBundle:Admin/Security:resetPassword" }
+

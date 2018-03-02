@@ -1,0 +1,5 @@
+Hello {{ invitationEntity.firstName }},
+
+A user account has been created for you on {%if app.session.get('accountName')%}{{app.session.get('accountName')}}{%else%}pulsetracker{%endif%}. To register, click on the link below:
+
+{{ url('register', {'code' : invitationEntity.invitationCode }) }}

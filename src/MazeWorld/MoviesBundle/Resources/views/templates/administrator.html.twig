@@ -1,0 +1,233 @@
+<!--<!DOCTYPE html> -->
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>{% block title %}pulsetracker{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/fontawesome/css/font-awesome.min.css') }}">   
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/simple-line-icons/css/simple-line-icons.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/animate.css/animate.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/css/app.css') }}" id="maincss">   
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/css/theme-e.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/whirl/dist/whirl.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/chosen_v1.2.0/chosen.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/flags/flags.css') }}">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/css/select2.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/datatable-bootstrap/css/dataTables.bootstrap.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/datatables/media/css/responsive.bootstrap.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/datatables-editor/css/editor.dataTables.css') }}"/>
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.bootstrap.min.css"/>
+        {# <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/datatables/media/css/buttons.bootstrap.min.css') }}"/> #}
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/datatables/media/css/datatables.min.css') }}"/>
+         
+
+                 
+     
+        <script src="{{ asset('bundles/tftapp/js/modernizr.js') }} "></script>
+        <script src="{{ asset('bundles/tftapp/js/jquery.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/bootstrap.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/jquery.storageapi.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/jquery.easing.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/animo.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/jquery.slimscroll.min.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/demo-rtl.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/vendor/screenfull/dist/screenfull.min.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/vendor/jquery-localize-i18n/dist/jquery.localize.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/formValidation.min.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/select2.min.js') }}"></script>
+        {#<script src="{{ asset('bundles/tftapp/js/custom.js') }}"></script>#}
+        <script src="{{ asset('bundles/tftapp/js/validator.js') }}"></script>      
+        <script src="{{ asset('bundles/tftapp/vendor/chosen_v1.2.0/chosen.jquery.min.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/typeahead.bundle.js') }} "></script>
+        <script src="{{ asset('bundles/tftapp/js/bootstrap-tagsinput.js') }}"></script>
+        <script src="{{ asset('bundles/tftpagination/js/pagination.js') }}"></script>
+        <link href="{{ asset('bundles/tftapp/css/bootstrap-tagsinput.css') }}" rel="stylesheet" type="text/css"/>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+        <script src="{{ asset('bundles/tftapp/vendor/spin/spin.js') }}"></script>
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+        <script src="{{ asset('bundles/tftapp/vendor/datatables/media/js/jquery.datatables.min.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/vendor/datatables/media/js/datatables.min.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/dataTables.bootstrap.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/vendor/datatables/media/js/responsive.datatables.min.js') }}"></script>            
+        <script src="{{ asset('bundles/tftapp/js/dataTables.bootstrapPagination.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/vendor/datatables-editor/js/dataTables.editor.js') }}"></script>
+        {# <script src="{{ asset('bundles/tftapp/vendor/datatables/media/js/buttons.colVis.js') }}"></script> #}
+        {# <script src="{{ asset('bundles/tftapp/vendor/datatables/media/js/buttons.bootstrap.js') }}"></script> #}
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.colVis.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+        
+    {%block extraJs%}
+    {%endblock%}
+</head>
+<body>
+    <div id="spin-cont" style="width: 100%;height: 100vh;position: fixed;opacity: 0.5;z-index: 999999;top: 0px;right: 0px;bottom: 0px;left: 0px; background-color:black"></div>
+    <div id="spinner"></div>
+    
+    <div class="wrapper">
+        <!-- top navbar-->
+        <header class="topnavbar-wrapper">
+            <!-- START Top Navbar-->
+            <nav role="navigation" class="navbar topnavbar">
+                <!-- START navbar header-->
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand">
+                        <div class="brand-logo">
+                            <img src="{{ asset('bundles/tftapp/images/logo.png')}}" alt="" class="img-responsive">
+                        </div>
+                        <div class="brand-logo-collapsed">
+                            <img src="{{ asset('bundles/tftapp/images/logo-single.png')}}" alt="" class="img-responsive">
+                        </div>
+                    </a>
+                </div>
+                <!-- END navbar header-->
+            </nav>
+            <!-- END Top Navbar-->
+        </header>  
+        <!-- sidebar-->
+        <aside class="aside">
+            <!-- START Sidebar (left)-->
+            <div class="aside-inner">
+                <nav class="sidebar">
+                    <!-- START sidebar nav-->
+                    <ul class="nav">
+                        <li class="nav-heading ">
+                            <span>Main Navigation</span>
+                        </li>
+
+                        <li class="{% if app.request.attributes.get('_route') == 'administrator_dashboard'%}active{% endif %} ">
+
+                            <a href="{{path('administrator_dashboard')}}" title="Dashboard">
+                                <em class="fa fa-dashboard"></em>
+                                <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
+                            </a>
+
+                        </li>
+                        <li class="">
+                            <li class="{% if app.request.attributes.get('_route') == 'administrator_account'%}active{% endif %} ">
+                                <a title="List Accounts" href="{{path('administrator_account')}}">
+                                 <em class="fa fa-building-o"></em>
+                                    <span>Accounts</span>
+                                </a>
+                            </li>
+                        </li>
+                        <li class="">
+                            <li class="{% if app.request.attributes.get('_route') == 'administrator_admin'%}active{% endif %} ">
+                                <a title="List Account Admins" href="{{path('administrator_admin')}}">
+                                    <em class="fa fa-users"></em>
+									<span>Users</span>
+                                </a>
+                            </li>
+                        </li>
+                        <li class="">
+                            <li class="{% if app.request.attributes.get('_route') == 'administrator_manage_isp'%}active{% endif %} ">
+                                <a title="" href="{{path('administrator_manage_isp')}}">
+                                    <em class="fa fa-filter"></em>
+                                    <span>ISP Filter</span>
+                                </a>
+                            </li>
+                        </li>
+                        
+                        <li class="">
+                            <li class="{% if app.request.attributes.get('_route') == 'administrator_changelog'%}active{% endif %}">
+                                <a title="" href="{{path('administrator_changelog')}}">
+                                    <em class="fa fa-file-text-o"></em>
+                                    <span>Changelog</span>
+                                </a>
+                            </li>
+                        </li>
+                        
+                        <li class="">
+                            <a href="{{path('admin_logout')}}" title="">
+                                <em class="fa fa-sign-out"></em>
+                                <span>Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- END sidebar nav-->
+                </nav>
+            </div>
+            <!-- END Sidebar (left)-->
+        </aside>
+
+        <!-- Main section-->
+        <section>
+            <!-- Page content-->
+            <div class="content-wrapper">   
+            {% block pageHeading %}{% endblock %}
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12" id="body-container">
+                        {% for flashMessage in app.session.flashbag.get('success') %}
+                            <div class="alert alert-success" role="alert">
+                                {{ flashMessage }}
+                            </div>
+                        {% endfor %}
+                        {% for flashMessage in app.session.flashbag.get('error') %}
+                            <div class="alert alert-danger" role="alert" id="alert-msgs-container">
+                                {{ flashMessage }}
+                            </div>
+                        {% endfor %}
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Page footer-->
+</div>
+<div class="modal fade in" aria-hidden="false" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="tft-modal-window" style="display: none; padding-right: 16px;">
+    <div class="modal-backdrop fade in"></div>
+    <div class="modal-dialog">
+        <div class="modal-content" id="tft-modal-window-body"></div>
+    </div>
+</div>
+
+    <script>
+        var opts = {
+        lines: 13 // The number of lines to draw
+        , length: 28 // The length of each line
+        , width: 20 // The line thickness
+        , radius: 42 // The radius of the inner circle
+        , scale: .75 // Scales overall size of the spinner
+        , corners: 1 // Corner roundness (0..1)
+        , color: '#000' // #rgb or #rrggbb or array of colors
+        , opacity: 0.25 // Opacity of the lines
+        , rotate: 0 // The rotation offset
+        , direction: 1 // 1: clockwise, -1: counterclockwise
+        , speed: 1 // Rounds per second
+        , trail: 60 // Afterglow percentage
+        , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+        , zIndex: 2e9 // The z-index (defaults to 2000000000)
+        , className: 'spinner' // The CSS class to assign to the spinner
+        , top: '50%' // Top position relative to parent
+        , left: '50%' // Left position relative to parent
+        , shadow: false // Whether to render a shadow
+        , hwaccel: false // Whether to use hardware acceleration
+        , position: 'fixed' // Element positioning
+        }
+
+        $("#spin-cont").hide();
+        var target = document.getElementById('spinner');
+        var spinner = new Spinner(opts);
+        function startSpin(){
+            $("#spin-cont").show();
+            spinner.spin(target);
+        }
+
+        function stopSpin(){
+            $("#spin-cont").hide();
+            spinner.stop();
+
+        }
+    </script>
+
+</body>
+</html>

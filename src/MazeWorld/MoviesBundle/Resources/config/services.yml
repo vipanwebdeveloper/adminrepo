@@ -1,0 +1,4 @@
+services:
+#    maze_world_movies.example:
+#        class: MazeWorld\MoviesBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

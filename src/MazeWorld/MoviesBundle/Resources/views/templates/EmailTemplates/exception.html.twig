@@ -1,0 +1,20 @@
+There is an error occured at PulseTracker.<br/><br/>
+
+{% if user or account %}
+-----------------------------------------------------------------<br/>
+{% if user %} User: {{user.fullName}} <br/> {% endif %}
+{% if account %} Account: {{account.accountName}} {% endif %} <br/>
+----------------------------------------------------------------- <br/><br/>
+{% endif %}
+
+ErrorCode: {{statusCode|default(exception.code)}}<br/>
+ErrorMessage: {{exception.message}}<br/>
+ErrorFile: {{exception.file}}<br/>
+ErrorLine: {{exception.line}}<br/>
+Full Details: {{exception.traceAsString}}
+
+{#
+<pre>
+    {{ dump(exception) }}
+</pre>
+#}

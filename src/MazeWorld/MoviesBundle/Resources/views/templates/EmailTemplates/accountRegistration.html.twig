@@ -1,0 +1,5 @@
+Hello {{ userEntity.firstName }},
+        
+Your {%if app.session.get('accountName')%}{{app.session.get('accountName')}}{%else%}pulsetracker{%endif%} account has been created! To confirm and set your password click the link below:
+        
+{{ url('tft_user_reset_password', {'code' : userEntity.passwordResetCode }) }}

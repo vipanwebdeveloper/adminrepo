@@ -1,0 +1,236 @@
+{% set account_display_name = visitEntity.site.account|account_display_name %}
+{% set account_logo = visitEntity.site.account|account_logo({'logo_url':'bundles/tftapp/images/logo2.png', 'login_screen':true}) %}
+
+{% if visitEntity.site.account.accountDomain %}
+    {% set webPath = visitEntity.site.account.accountDomain %}
+{% endif%}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style type="text/css">
+@charset "UTF-8";
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.52857143;
+  color: #515253;
+  background-color: #fff;
+}
+
+a {
+  color: #5d9cec;
+  text-decoration: none;
+}
+a:hover,
+a:focus {
+  color: #1b72e2;
+  text-decoration: underline;
+}
+a:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+.img-circle {
+  border-radius: 50%;
+}
+
+table {
+  background-color: transparent;
+}
+th {
+  text-align: left;
+}
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 21px;
+}
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.52857143;
+  vertical-align: top;
+  border-top: 1px solid #eeeeee;
+}
+.table > thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #eeeeee;
+}
+.table > caption + thead > tr:first-child > th,
+.table > colgroup + thead > tr:first-child > th,
+.table > thead:first-child > tr:first-child > th,
+.table > caption + thead > tr:first-child > td,
+.table > colgroup + thead > tr:first-child > td,
+.table > thead:first-child > tr:first-child > td {
+  border-top: 0;
+}
+.table > tbody + tbody {
+  border-top: 2px solid #eeeeee;
+}
+.table .table {
+  background-color: #f5f7fa;
+}
+
+</style>
+    <meta charset="UTF-8">
+
+    <title>Click-path Email Template</title>
+</head>
+
+<body>
+    <div align="center">
+        <table width="600px" style="background-color: transparent;">
+            <tr>
+                <td>
+                    <table width="100%" style="background-color: transparent;">
+                        <tr>
+                            <td align="center"><a href="{{webPath}}{{path('admin_dashboard')}}"><img alt="{{account_display_name}}" src="{{account_logo}}" style="display: block; font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 16px;" border="0"></a></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <p><em><strong>{{user.firstName}} {{user.lastName}}</strong> shared this visitor click-path with you.</em></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {%if message%}<em>{{message|nl2br}}</em><br /><br />{%endif%}
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table class="table" style="background-color: transparent;width: 100%;max-width: 100%;margin-bottom: 21px;">
+                        <tbody style="white-space: nowrap;">
+                            <tr>
+                                <td colspan="2" style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">
+                                
+                                {% if visitEntity.contacts.proPic != '' or visitEntity.contacts.proPic != null %}
+                                    <img src="{{ visitEntity.contacts.proPic }}" id="proPic"  style="max-height: 50px;max-width: 50px;min-height: 50px;min-width: 50px;border-radius: 50%;" align="center" />
+                                {% else %}
+                                    <img src="{{ asset('bundles/tftapp/images/mystery_man.png', absolute=true) }}" id="proPic"  style="max-height: 50px;max-width: 50px;min-height: 50px;min-width: 50px;border-radius: 50%;" align="center" />
+                                {% endif %}
+
+                                <strong><a href="{{webPath}}{{ path('admin_visitor_show', {'id':visitEntity.contacts.id}) }}" style="color: #5d9cec;text-decoration: none;">{{visitEntity.contacts.fullName}}</a> visited <a href="{{visitEntity.site.siteUrl}}" target="_blank" style="color: #5d9cec;text-decoration: none;">{{visitEntity.site.siteName}}</a> on {{visitEntity.createdOn|timeZone}}</strong></td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">Total Page Views</td>
+
+                                <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">{{visitEntity.analyticsVisitorPageViews|length}}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">Visit Duration</td>
+
+                                <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">{{visitEntity.createdOn|dateInterval(visitEntity.expiredOn,'')}}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">Total Visits</td>
+
+                                <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">1</td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">Company</td>
+
+                                <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;"><a href="https://www.google.com/#q={{visitEntity.org}}" target="_blank" class="link-muted" style="color: #5d9cec;text-decoration: none;">{{visitEntity.org}}</a></td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">Domain</td>
+
+                                <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">{%if visitEntity.domain|getdomain%}<img src="https://www.google.com/s2/favicons?domain_url=http://{{visitEntity.domain|getdomain}}" class="icon5rt"> <a href="http://{{visitEntity.domain|getdomain}}" target="_blank" style="color: #5d9cec;text-decoration: none;">{{visitEntity.domain|getdomain}}</a>{% endif %}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">Source</td>
+
+                                <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">
+                                
+                                    {% if visitEntity.analyticsReferrers %}
+                                    <img src="https://www.google.com/s2/favicons?domain_url={{visitEntity.analyticsReferrers.refererUrl|urldecode}}" class="icon5rt" /> <a href="{{visitEntity.analyticsReferrers.refererUrl|urldecode}}" target="_blank" class="link-muted" style="color: #5d9cec;text-decoration: none;">
+                                    {% if visitEntity.analyticsReferrers.site %}
+                                        {{visitEntity.analyticsReferrers.site.siteUrl|urldecode|replace({'http://':'', 'https://':''})}}
+                                    {%else%}
+                                        {{visitEntity.analyticsReferrers.refererUrl|urldecode|getdomain}}
+                                    {%endif%}
+                                    </a>
+                                    {% else %}
+                                        <em class="fa fa-arrow-circle-right"></em> Direct
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {%if visitEntity.analyticsCountry %}
+                                {%set state = ''%}
+                                {%set city = '' %}
+
+                                {%if visitEntity.analyticsState %}
+                                    {%set state = visitEntity.analyticsState.state %}
+                                {%endif%}
+
+                                {%if visitEntity.analyticsCity %}
+                                    {%set city = visitEntity.analyticsCity.city %}
+                                {%endif%}
+                            <tr>
+                                <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">Location</td>
+
+                                <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;"><a href="https://www.google.com/maps/place/{{visitEntity.analyticsCountry.country}}+{{state}}+{{city}}+{{visitEntity.contacts.postalCode}}" style="color: #5d9cec;text-decoration: none;">{{city}} {{state}} {%if visitEntity.contacts.postalCode is not null %} {{visitEntity.contacts.postalCode}} {%endif%} {{visitEntity.analyticsCountry.country}}</a></td>
+                            </tr>
+                            {%endif%}  
+                        </tbody>
+                    </table>
+
+                    <table class="table" style="background-color: transparent;width: 100%;max-width: 100%;margin-bottom: 21px;">
+                        <thead>
+                            <tr>
+                                <th style="text-align: left;padding: 8px;line-height: 1.52857143;vertical-align: bottom;border-top: 0;border-bottom: 2px solid #eeeeee;">Session began: {{visitEntity.createdOn|timeZone("m/d/Y h:i a")}}</th>
+
+                                <th style="text-align: left;padding: 8px;line-height: 1.52857143;vertical-align: bottom;border-top: 0;border-bottom: 2px solid #eeeeee;">&nbsp;</th>
+                            </tr>
+                        </thead>
+
+                        <tfoot>
+                            <tr>
+                                <th style="text-align: left;padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">Session ended: {{visitEntity.expiredOn|timeZone("m/d/Y h:i a")}}</th>
+
+                                <th style="text-align: left;padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">&nbsp;</th>
+                            </tr>
+                        </tfoot>
+
+                        <tbody>
+                            {%if visitEntity.analyticsVisitorPageViews %}
+                                {%for vistiorViewEntity in visitEntity.analyticsVisitorPageViews %}
+                                    {% if vistiorViewEntity.analyticsDocuments %}
+                                        <tr>    
+                                            <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">
+                                                <a href="{{vistiorViewEntity.analyticsDocuments.url}}" target="_blank" style="color: #5d9cec;text-decoration: none;">
+                                                    <em class="fa fa-file-text-o icon5rt"></em>{{vistiorViewEntity.analyticsDocuments.pageTitle}}
+                                                </a>
+                                            </td>
+                                            <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">
+                                                {{vistiorViewEntity.visitStartTime|dateInterval(vistiorViewEntity.visitEndTime,'')}}
+                                            </td>
+                                        </tr>
+                                    {%endif%}
+
+                                {% endfor %}
+                            {%endif%}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+​

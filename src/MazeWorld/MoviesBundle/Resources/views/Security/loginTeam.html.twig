@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>Sign in to your account</title>
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/css/app.css') }}" id="maincss">
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/css/theme-e.css') }}">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon2.ico') }}" />
+        <script src="{{ asset('bundles/tftapp/js/jquery.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/formValidation.min.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/validator.js') }}"></script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <!-- Main section-->
+            <div class="row">
+                <div class="panel-body">
+                    <div align="center" style="margin-top: 50px">
+                    </div>
+
+                    <div class="wrapper">
+                        <div class="block-center mt-xl wd-xl">
+
+                            {% for flashMessage in app.session.flashbag.get('error') %}
+                                <div class="alert alert-danger">{{ flashMessage|raw }}</div>
+                            {% endfor %}
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form method="post" action="{{ path('admin_login') }}" data-parsley-validate="" novalidate="">
+                                        <!-- START panel-->
+                                        <div class="panel panel-dark panel-flat">
+                                            <div class="panel-body">
+                                                <div class="form-group row">
+                                                    <div class="col-xs-8">
+                                                        <input id="team-url" name="_teamUrl" type="text" placeholder="your-account-name" autocomplete="off" required class="form-control text-right">
+                                                    </div>
+                                                    <div class="col-4 pull-left mt">
+                                                        <label><big>.leadapp.net</big></label>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-block btn-primary mt-lg">
+                                                    Continue
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!-- END panel-->
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
+
+                <div class="p-lg text-center">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

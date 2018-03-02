@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>{% block title %}{%if app.session.get('loginDisplayName')%}{{app.session.get('loginDisplayName')}}{%else%}pulsetracker{%endif%}{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/css/app.css') }}" id="maincss">
+        <link rel="stylesheet" href="{{ asset('bundles/tftapp/css/theme-e.css') }}">
+        {% if app.session.get('loginFavicon') %}
+            <link rel="icon" type="image/x-icon" href="{{app.session.get('loginFavicon')}}" />
+        {% else %}
+            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% endif %}
+        
+        <script src="{{ asset('bundles/tftapp/js/jquery.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/formValidation.min.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/tftapp/js/validator.js') }}"></script>
+    </head>
+    <body>
+        <div class="wrapper">
+
+            <!-- Main section-->
+
+            <div class="row">
+                <div class="panel-body">
+                    <div align="center" style="margin-top: 50px">
+                        {% if app.session.get('loginDomainLogo') %}
+                            <img src="{{app.session.get('loginDomainLogo')}}" alt="">
+                        {% else %}
+                            <img src="{{ asset('bundles/tftapp/images/logo2.png')}}" alt="">
+                        {% endif %}
+                    </div>
+
+                {% block body %}{% endblock %}
+                <div class="p-lg text-center">
+                    <!--<span>&copy;</span>
+                    <span>{{ "now"|date("Y") }}</span>
+                    <span><a href="" target="_blank" class="link-muted"></a></span>
+                    <span>&bull;</span>
+                    <span>All Rights Reserved</span>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

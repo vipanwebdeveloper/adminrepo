@@ -1,0 +1,554 @@
+{#routes for navigation logic#}
+{% set companyArray  = ['admin_company', 'admin_company_new', 'admin_company_edit', 'admin_company_show'] %}
+{% set dealArray  = ['admin_deals','deal_edit','deal_show','deal_create','deal_open', 'deals_stage_open'] %}
+{% set contactArray  = ['admin_contact', 'admin_contact_new', 'admin_contact_edit', 'admin_contact_show'] %}
+{% set leadArray  = ['admin_leads', 'admin_lead_new', 'admin_lead_edit', 'admin_lead_show','admin_lead_inquiry_index', 'admin_lead_inquiry_show','admin_leads_filter'] %}
+{% set visitorArray = ['admin_visitors', 'admin_visitor_show', 'admin_visitor_edit'] %}
+{% set emailMarketingArray  = ['admin_emailmarketing_subscriber', 'admin_emailmarketing_new', 'admin_emailmarketing_subscriber_new', 'admin_emailmarketing_subscriber_edit', 'admin_emailmarketing_subscriber_show'] %}
+
+
+<aside class="aside">
+    <!-- START Sidebar (left)-->
+    <div class="aside-inner">
+        <nav class="sidebar">
+            <!-- START sidebar nav-->
+            <ul class="nav">
+                <li class="nav-heading ">
+                    <span>Main Navigation</span>
+                </li>
+                {% if is_granted('ROLE_SUPER_ADMIN') and 1!=1 %}
+                    <li {% if routeName =='admin_dashboard' %}class="active"{% endif %}>
+                        <a href="{{ path('admin_dashboard') }}">
+                            <em class="fa fa-dashboard"></em>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                {% elseif marketingmodule==0 and salesModule==1 %}
+                    <li {% if routeName =='admin_dashboard_sale' %}class="active"{% endif %}>
+                        <a href="{{ path('admin_dashboard_sale') }}">
+                            <em class="fa fa-dashboard"></em>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                {% elseif salesModule==0 and marketingmodule==1 %}
+                    <li {% if routeName =='admin_dashboard_marketing' %}class="active"{% endif %}>
+                        <a href="{{ path('admin_dashboard_marketing') }}">
+                            <em class="fa fa-dashboard"></em>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="">
+                        <a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+                            <em class="fa fa-dashboard"></em>
+                            <span>Dashboard</span>
+                        </a>
+                        <ul class="nav sidebar-subnav collapse" id="dashboard" aria-expanded="false"
+                            style="height: 0px;">
+                            <li {% if routeName == 'admin_dashboard_sale' %}class="active"{% endif %}>
+                                <a href="{{ path('admin_dashboard_sale') }}">
+                                    <span>Sales</span>
+                                </a>
+                            </li>
+                            <li {% if routeName == 'admin_dashboard_marketing' %}class="active"{% endif %}>
+                                <a href="{{ path('admin_dashboard_marketing') }}">
+                                    <span>Marketing</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+                <li class="">
+                    <a id="toggle" data-toggle="collapse" href="#contact" class="collapsed" aria-expanded="false">
+                        <em class="fa fa-user-circle-o"></em>
+                        <span>Contacts {% if updates and is_granted('ROLE_ADMIN') %}{% if contactCount != '' and contactCount != 0 %}
+                                <span id="toggled" class="badge pull-right"
+                                      style="background-color: #3a87ad;">{{ contactCount }}</span>{% endif %}{% endif %}</span>
+                    </a>
+                    <ul class="nav sidebar-subnav collapse" id="contact" aria-expanded="false" style="height: 0px;">
+                        <li {% if routeName in contactArray and (fromList == '' or uri == 'contacts') %}class="active"{% endif %}>
+                            <a href="{{ path('admin_contact') }}">
+                                <span>All Contacts</span>
+                            </a>
+                        </li>
+                        {% for  contactListEntity in contactListArray %}
+                            <li {% if (routeName =='admin_contact_custom_list' and uri == contactListEntity.id) or (fromList == contactListEntity.slug and routeName in contactArray and uri != 'contacts') %}class="active"{% endif %}>
+                                <a href="{{ path('admin_contact_custom_list',{'id':contactListEntity.id,'slug':contactListEntity.slug}) }}">
+                                    <span>{{ contactListEntity.listName }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                        {% if updates and is_granted('ROLE_ADMIN') %}
+                            <li {% if routeName =='admin_contact_show_fullcontact_updates' or routeName == 'admin_contact_list_fullcontact_cards' or routeName == 'admin_contact_merge_all_fullcontact_cards' %}class="active"{% endif %}>
+                                <a title="" href="{{ path('admin_contact_show_fullcontact_updates') }}">
+                                    <div>Social Updates {% if contactCount != '' and contactCount != 0 %}<span class="badge pull-right" style="background-color: #3a87ad;">{{ contactCount }}</span>{% endif %}
+                                    </div>
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <a href="#"
+                               onclick="javascript: loadModalWindow(Routing.generate('admin_lists_new', {'type': 'Contacts'})); return false;"
+                               target="_blank">
+                                <span>Add New List</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a data-toggle="collapse" href="#companies" class="collapsed" aria-expanded="false">
+                        <em class="fa fa-building"></em>
+                        <span>Companies</span>
+                    </a>
+
+                    <ul class="nav sidebar-subnav collapse" id="companies" aria-expanded="false" style="height: 0px;">
+                        <li {% if routeName in companyArray %}class="active"{% endif %}>
+                            <a href="{{ path('admin_company') }}">
+                                <span>All Companies</span>
+                            </a>
+                        </li>
+                        {% for companyListEntity in companyListArray %}
+                            <li {% if (routeName == 'admin_company_filter' and uri == companyListEntity.id) %}class="active"{% endif %}>
+                                <a href="{{ path('admin_company_filter',{'id':companyListEntity.id,'slug':companyListEntity.slug}) }}">
+                                    <span>{{ companyListEntity.listName|title }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                        <li>
+                            <a href="#"
+                               onclick="javascript: loadModalWindow(Routing.generate('admin_lists_new', {'type': 'Company'})); return false;"
+                               target="_blank">
+                                <span>Add New List</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {% if (routeName=='admin_analytics_visits') %}
+                <li class="active visitors_li">
+                    <a data-toggle="collapse" href="#visitors" class="" aria-expanded="true">
+                        {% else %}
+                <li class="visitors_li">
+                    <a data-toggle="collapse" href="#visitors" class="collapsed" aria-expanded="false">
+                        {% endif %}
+                        <em class="fa fa-tags"></em>
+                        <span>Visitors</span>
+                    </a>
+                    {% if (routeName=='admin_analytics_visits') %}
+                    <ul class="nav sidebar-subnav collapse in" id="visitors" aria-expanded="true">
+                        {% else %}
+                        <ul class="nav sidebar-subnav collapse" id="visitors" aria-expanded="false"
+                            style="height: 0px;">
+                            {% endif %}
+                            <li {% if routeName in visitorArray and (attributes.get('slug') is null or attributes.get('slug')=='' or attributes.get('filter')!='') %}class="active"{% endif %}>
+                                <a href="{{ path('admin_visitors') }}">
+                                    <span>All Visitors</span>
+                                </a>
+                            </li>
+                            {% for visitorListEntity in visitorsListArray %}
+                                {% if visitorListEntity.isSystem %}
+                                    <li {% if routeName=='admin_visitors' and attributes.get('slug') == visitorListEntity.slug %}class="active"{% endif %}>
+                                        <a href="{{ path('admin_visitors', {'slug':visitorListEntity.slug}) }}">
+                                            <span>{{ visitorListEntity.listName }}</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li {% if (routeName=='admin_visitor_custom_list' and attributes.get('slug') == visitorListEntity.slug) %}class="active"{% endif %}>
+                                        <a href="{{ path('admin_visitor_custom_list',{'id':visitorListEntity.id,'slug':visitorListEntity.slug}) }}">
+                                            <span>{{ visitorListEntity.listName }}</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            <li>
+                                <a href="#"
+                                   onclick="javascript: loadModalWindow(Routing.generate('admin_lists_new', {'type': 'Visitors'})); return false;"
+                                   target="_blank">
+                                    <span>Add New List</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                <li>
+                    <a data-toggle="collapse" href="#leads" class="collapsed" aria-expanded="false">
+                        <em class="fa fa-inbox"></em>
+                        <span>Leads</span>
+                    </a>
+                    <ul class="nav sidebar-subnav collapse" id="leads" aria-expanded="false" style="height: 0px;">
+                        <li {% if routeName in leadArray and (fromList == '' or uri == 'leads' ) and uri not in ['companies', 'contacts'] %}class="active"{% endif %}>
+                            <a href="{{ path('admin_leads') }}">
+                                <span>All Leads</span>
+                            </a>
+                        </li>
+                        {% for leadListEntity in leadsListArray %}
+                            <li {% if (routeName =='admin_lead_custom_list' and uri == leadListEntity.id) or (fromList == leadListEntity.slug and routeName in leadArray and uri != 'leads') %}class="active"{% endif %}>
+                                <a href="{{ path('admin_lead_custom_list',{'id':leadListEntity.id,'slug':leadListEntity.slug}) }}">
+                                    <span>{{ leadListEntity.listName }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                        <li>
+                            <a href="#"
+                               onclick="javascript: loadModalWindow(Routing.generate('admin_lists_new', {'type': 'Lead'})); return false;"
+                               target="_blank">
+                                <span>Add New List</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="{% if routeName in dealArray %}active{% endif %} deals_li">
+                    <a data-toggle="collapse" href="#deals" class="collapsed" aria-expanded="false">
+                        <em class="fa fa-money"></em>
+                        <span>Deals</span>
+                    </a>
+                    <ul id="deals" class="nav sidebar-subnav collapse">
+                        <li {% if (routeName == 'deal_open' or routeName=='deals_stage_open' or (routeName=='deal_show' and referer=='open')) %}class="active"{% endif %}>
+                            <a href="{{ path('deal_open') }}">
+                                <span>Open Deals</span>
+                            </a>
+                        </li>
+                        {% for dealsListEntity in dealsListArray %}
+                            <li {% if ((routeName =='deal_filter' and uri == dealsListEntity.id) or (routeName=='deal_show' and referer==dealsListEntity.slug)) %}class="active"{% endif %}>
+                                <a href="{{ path('deal_filter',{'id':dealsListEntity.id,'slug':dealsListEntity.slug}) }}">
+                                    <span>{{ dealsListEntity.listName|title }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                        <li {% if (routeName =='deal_won' or (routeName=='deal_show' and referer=='won')) %}class="active"{% endif %}>
+                            <a href="{{ path('deal_won') }}">
+                                <span>Deals Won</span>
+                            </a>
+                        </li>
+                        <li {% if (routeName =='deal_lost' or (routeName=='deal_show' and referer=='lost')) %}class="active"{% endif %}>
+                            <a href="{{ path('deal_lost') }}">
+                                <span>Deals Lost</span>
+                            </a>
+                        </li>
+                        <li {% if (routeName =='deal_archived'  or (routeName=='deal_show' and referer=='archived')) %}class="active"{% endif %}>
+                            <a href="{{ path('deal_archived') }}">
+                                <span>Archive</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                               onclick="javascript: loadModalWindow(Routing.generate('admin_lists_new', {'type': 'Deals'})); return false;"
+                               target="_blank">
+                                <span>Add New List</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="{% if routeName =='deal_calendar' %}active{% endif %} calendar_li">
+                    <a href="{{ path('deal_calendar') }}">
+                        <em class="fa fa-calendar"></em>
+                        <span>Calendar</span>
+                    </a>
+                </li>
+                <li class="{% if routeName in ['tasks_index'] %}active{% endif %} tasks_li">
+                    <a href="{{ path('tasks_index') }}">
+                        <em class="fa fa-check-square-o"></em>
+                        <span>Tasks</span>
+                    </a>
+                </li>
+                
+                        {% if app.session.get('account') %}
+                            {% if app.session.get('account').emailModule %}
+                                {% if emailMarketingAccount or is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <a data-toggle="collapse" href="#emailmarketing" class="collapsed"
+                                           aria-expanded="false">
+                                            <em class="fa fa-envelope"></em>
+                                            <span>Email Marketing</span>
+                                        </a>
+                                        <ul class="nav sidebar-subnav collapse" id="emailmarketing"
+                                            aria-expanded="false" style="height: 0px;">
+                                            <li class="{% if routeName in ['admin_emailmarketing','admin_emailmarketing_campaign'] %}active{% endif %} ">
+                                                <a href="{{ path('admin_emailmarketing') }}">
+                                                    <span>Campaigns</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#subscribers" data-toggle="collapse">
+                                                    <span>Subscriber Lists</span>
+                                                </a>
+                                                <ul id="subscribers" class="nav sidebar-subnav collapse">
+                                                    <li {% if routeName == 'admin_emailmarketing_subscribers' or (routeName in emailMarketingArray and fromList == "") %}class="active"{% endif %}>
+                                                        <a title=""
+                                                           href="{{ path('admin_emailmarketing_subscribers') }}"
+                                                           class="{% if routeName =='admin_emailmarketing_subscribers' %}active{% endif %}">
+                                                            <span>All Subscribers</span>
+                                                        </a>
+                                                    </li>
+                                                    {% for emailMarketingListEntity in emailMarketingListArray %}
+                                                        <li {% if (routeName =='admin_emailmarketing_custom_list' and uri == emailMarketingListEntity.id) or (fromList == emailMarketingListEntity.slug and routeName in emailMarketingArray and uri != 'email-marketing') %}class="active"{% endif %}>
+                                                            <a href="{{ path('admin_emailmarketing_custom_list',{'id':emailMarketingListEntity.id,'slug':emailMarketingListEntity.slug}) }}">
+                                                                <span>{{ emailMarketingListEntity.listName }}</span>
+                                                            </a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+                                            <li class="{% if routeName =='admin_emailmarketing_unsubscribes' %}active{% endif %}">
+                                                <a title="" href="{{ path('admin_emailmarketing_unsubscribes') }}">
+                                                    <span>Unsubscribes &amp; Bounces</span>
+                                                </a>
+                                            </li>
+                                            {% if emailMarketingAccountType %}
+                                                <li>
+                                                    <a href="#"
+                                                       onclick="javascript: loadModalWindow(Routing.generate('admin_lists_new', {'type': 'Email'})); return false;"
+                                                       target="_blank">
+                                                        <span>Add New List</span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                <li class="web_analytics">
+                    <a data-toggle="collapse" href="#analytics" class="collapsed" aria-expanded="false">
+                        <em class="fa fa-bar-chart"></em>
+                        <span>Web Analytics</span>
+                    </a>
+                    <ul class="nav sidebar-subnav collapse" id="analytics" aria-expanded="false"
+                        style="height: 0px;">
+                        <li class="{% if routeName =='admin_analytics' %}active{% endif %}">
+                            <a href="{{ path('admin_analytics') }}">
+                                <span>Overview</span>
+                            </a>
+                        </li>
+                        <li class="{% if routeName =='admin_analytics_pages' %}active{% endif %}">
+                            <a href="{{ path('admin_analytics_pages') }}">
+                                <span>Page Views</span>
+                            </a>
+                        </li>
+                        <li class="{% if routeName =='admin_analytics_sources' %}active{% endif %}">
+                            <a href="{{ path('admin_analytics_sources') }}">
+                                <span>Sources</span>
+                            </a>
+                        </li>
+                        <li class="{% if routeName =='admin_analytics_keywords' %}active{% endif %}">
+                            <a href="{{ path('admin_analytics_keywords') }}">
+                                <span>Keywords</span>
+                            </a>
+                        </li>
+                        <li class="{% if routeName =='admin_analytics_locations' %}active{% endif %}">
+                            <a href="{{ path('admin_analytics_locations') }}">
+                                <span>Locations</span>
+                            </a>
+                        </li>
+                        <li class="{% if routeName =='admin_analytics_technologies' %}active{% endif %}">
+                            <a href="{{ path('admin_analytics_technologies') }}">
+                                <span>Technologies</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                        {% if app.session.get('account') %}
+                            {% if app.session.get('account').mailModule %}
+                                {% if mailAccount or is_granted('ROLE_ADMIN') %}
+                            <!--
+                            <li class="">
+                                <a href="{{ path('admin_mail_mailboxes') }}">
+                                    <em class="fa fa-envelope"></em><span>MailBox</span>
+                                </a>
+                            </li>
+                            -->
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+		                <li class="reports_li">
+		                    <a data-toggle="collapse" href="#reporting" class="collapsed" aria-expanded="false">
+		                        <em class="fa fa-file-text"></em>
+		                        <span>Reports</span>
+		                    </a>
+		                    <ul id="reporting" class="nav sidebar-subnav collapse">
+		                     	<!--
+		                      	<li class="{% if routeName in ['revenue_report'] %}active{% endif %}">
+		                            <a href="{{ path('revenue_report') }}">
+		                                <span>Revenue Report</span>
+		                            </a>
+		                        </li>
+		                        
+		                        <li class="{% if routeName in ['activity_report'] %}active{% endif %}">
+		                            <a href="{{ path('activity_report') }}">
+		                                <span>Activity Report</span>
+		                            </a>
+		                        </li>
+		                        -->
+		                       <li class="{% if routeName in ['source_report'] %}active{% endif %}">
+		                            <a href="{{ path('source_report') }}">
+		                                <span>Deal Sources Report</span>
+		                            </a>
+		                        </li>
+                                <li class="{% if routeName in ['contact_source_report'] %}active{% endif %}">
+                                    <a href="{{ path('contact_source_report') }}">
+                                        <span>Contact Sources Report</span>
+                                    </a>
+                                </li>
+		                    </ul>
+		                </li>
+		                <li>
+                            <a data-toggle="collapse" href="#setting" class="collapsed" aria-expanded="false">
+                                <em class="fa fa-cogs"></em>
+                                <span>Settings</span>
+                            </a>
+                            <ul class="nav sidebar-subnav collapse" id="setting" aria-expanded="false"
+                                style="height: 0px;">
+                                <li class="{% if routeName =='admin_settings_general' %}active{% endif %}">
+                                    <a href="{{ path('admin_settings_general') }}">
+                                        <span>General</span>
+                                    </a>
+                                </li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li class="{% if routeName in ['admin_user','admin_user_edit'] %}active{% endif %}">
+                                        <a href="{{ path('admin_user') }}">
+                                            <span>Users</span>
+                                        </a>
+                                    </li>
+                                    <!--<li {% if routeName == 'admin_user_roles' %}class="active"{% endif %}>
+                            <a href="{{ path('admin_user_roles') }}">
+                                <span>User Roles</span>
+                            </a>
+                        </li>-->
+                                {% endif %}
+                                <li class="{% if routeName =='admin_settings_lists' %}active{% endif %}">
+                                    <a href="{{ path('admin_settings_lists') }}">
+                                        <span>Lists</span>
+                                    </a>
+                                </li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <a href="#integrations" title="Integrations" data-toggle="collapse">
+                                            <span>Integrations</span>
+                                        </a>
+                                        <ul id="integrations" class="nav sidebar-subnav collapse">
+                                            <li class="{% if routeName in ['admin_site','admin_site_new','admin_site_edit'] %}active{% endif %} ">
+                                                <a href="{{ path('admin_site') }}">
+                                                    <span>Websites</span>
+                                                </a>
+                                            </li>
+                                            {% if app.session.get('account') %}
+                                                {% if app.session.get('account').emailModule %}
+                                                    <li class="{% if routeName in ['admin_settings_emailintegration','admin_settings_emailintegration_wizard','admin_settings_emailintegration_listimport'] %}active{% endif %}">
+                                                        <a href="{{ path('admin_settings_emailintegration') }}">
+                                                            <span>Email Marketing</span>
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endif %}
+
+                                            {% if app.session.get('account') %}
+                                                {% if app.session.get('account').mailModule %}
+                                                    <li class="{% if routeName in ['admin_settings_mail_integration', 'admin_mailaccount_new', 'admin_mailaccount_configuration', 'admin_settings_mail_templates'] %}active{% endif %}">
+                                                        <a href="{{ path('admin_settings_mail_integration') }}">
+                                                            <span>Personal Email</span>
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endif %}
+
+                                        </ul>
+                                    </li>
+                                {% elseif app.session.get('account') %}
+                                    {% if app.session.get('account').mailModule %}
+                                        <li>
+                                            <a href="#integrations" data-toggle="collapse">
+                                                <span>Integrations</span>
+                                            </a>
+                                            <ul id="integrations" class="nav sidebar-subnav collapse">
+                                                <li class="{% if routeName in ['admin_settings_mail_integration', 'admin_mailaccount_new', 'admin_mailaccount_configuration'] %}active{% endif %}">
+                                                    <a href="{{ path('admin_settings_mail_integration') }}">
+                                                        <span>Personal Email</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                {% endif %}
+
+                                <li>
+                                    <a href="#customizations" data-toggle="collapse">
+                                        <span>Customizations</span>
+                                    </a>
+                                    <ul id="customizations" class="nav sidebar-subnav collapse">
+                                        <li class="{% if routeName == 'dealstages' %}active{% endif %} ">
+                                            <a href="{{ path('dealstages') }}">
+                                                <span>Stages</span>
+                                            </a>
+                                        </li>
+                                        <li class="{% if routeName == 'admin_status' %}active{% endif %} ">
+                                            <a href="{{ path('admin_status') }}">
+                                                <span>Statuses</span>
+                                            </a>
+                                        </li>
+                                        <li class="{% if routeName == 'admin_source' %}active{% endif %} ">
+                                            <a href="{{ path('admin_source') }}">
+                                                <span>Sources</span>
+                                            </a>
+                                        </li>
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            <li class="{% if routeName == 'admin_settings_filters' %}active{% endif %} gen_filters">
+                                                <a href="{{ path('admin_settings_filters') }}">
+                                                    <span>Filters</span>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        <li class="{% if routeName == 'admin_custom_field' %}active{% endif %} ">
+                                            <a href="{{ path('admin_custom_field') }}">
+                                                <span>Custom Fields</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                            </ul>
+                        </li>
+                        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                            <li>
+                                <a href="{{ path('administrator_admin', {'_switch_user': '_exit'}) }}">
+                                    <em class="fa fa-sign-out text-muted"></em>
+                                    <span>Exit Impersonation</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <!-- END sidebar nav-->
+        </nav>
+    </div>
+    <!-- END Sidebar (left)-->
+</aside>
+{% if marketingmodule==0 %}
+    <style>
+        .visitors_li, .web_analytics, #dashboard li:last-child, .dashboardtab .section_dashboard, .digest_email, #integrations li:first-child, .gen_filters {
+            display: none !important;
+        }
+    </style>
+{% endif %}
+{% if salesModule==0 %}
+    <style>
+        #dashboard li:first-child, .deals_li, .reports_li, .calendar_li, .tasks_li, #customizations li:first-child, .custom_fields li.Deals, .dashboardtab .sales_dashboard, .dashboardtab .dashboard_sett, .quick_deal, .quick_event, .quick_task {
+            display: none !important;
+        }
+    </style>
+{% endif %}
+<script>
+    $(document).ready(function () {
+        checkContactToggle();
+        $('#toggle').click(function () {
+            if ($('#toggle').attr('aria-expanded') == 'true') {
+                $('#toggled').show();
+            } else {
+                $('#toggled').hide();
+            }
+        });
+    });
+
+    function checkContactToggle() {
+        if ($('#toggle').attr('aria-expanded') == 'true') {
+            $('#toggled').hide();
+        } else {
+            $('#toggled').show();
+        }
+    }
+</script>

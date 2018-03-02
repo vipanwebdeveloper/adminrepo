@@ -1,0 +1,3 @@
+maze_world_movies:
+    resource: "@MazeWorldMoviesBundle/Resources/config/routing.yml"
+    prefix:   /

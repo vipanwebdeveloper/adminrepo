@@ -1,0 +1,186 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Movies
+ *
+ * @ORM\Table(name="movies")
+ * @ORM\Entity
+ */
+class Movies
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="year", type="string", length=255, nullable=true)
+     */
+    private $year;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rated", type="string", length=255, nullable=true)
+     */
+    private $rated;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="released", type="string", length=255, nullable=true)
+     */
+    private $released;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="runtime", type="string", length=255, nullable=true)
+     */
+    private $runtime;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="genre", type="string", length=255, nullable=true)
+     */
+    private $genre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="director", type="string", length=255, nullable=true)
+     */
+    private $director;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="writer", type="string", length=255, nullable=true)
+     */
+    private $writer;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="actors", type="string", length=255, nullable=true)
+     */
+    private $actors;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="plot", type="string", length=255, nullable=true)
+     */
+    private $plot;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="language", type="string", length=255, nullable=true)
+     */
+    private $language;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="country", type="string", length=255, nullable=true)
+     */
+    private $country;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="awards", type="string", length=255, nullable=true)
+     */
+    private $awards;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="poster", type="string", length=255, nullable=true)
+     */
+    private $poster;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="metascore", type="string", length=255, nullable=true)
+     */
+    private $metascore;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imdbrating", type="string", length=255, nullable=true)
+     */
+    private $imdbrating;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imdbvotes", type="string", length=255, nullable=true)
+     */
+    private $imdbvotes;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imdbid", type="string", length=255, nullable=true)
+     */
+    private $imdbid;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
+     */
+    private $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="response", type="string", length=255, nullable=true)
+     */
+    private $response;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createdAt", type="datetime", nullable=false)
+     */
+    private $createdat;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
+     */
+    private $updatedat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imdb_id", type="string", length=255, nullable=false)
+     */
+    private $imdbId;
+
+
+}

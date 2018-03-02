@@ -1,0 +1,74 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Users
+ *
+ * @ORM\Table(name="users")
+ * @ORM\Entity
+ */
+class Users
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=50, nullable=true)
+     */
+    private $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255, nullable=true)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="role", type="string", length=20, nullable=true)
+     */
+    private $role;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="datetime", nullable=true)
+     */
+    private $created;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="modified", type="datetime", nullable=true)
+     */
+    private $modified;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean", nullable=false)
+     */
+    private $active;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="integer", nullable=false)
+     */
+    private $status;
+
+
+}

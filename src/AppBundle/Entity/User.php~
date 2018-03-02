@@ -1,0 +1,81 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * User
+ *
+ * @ORM\Table(name="user", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"}), @ORM\UniqueConstraint(name="email", columns={"email"}), @ORM\UniqueConstraint(name="password_reset_token", columns={"password_reset_token"})})
+ * @ORM\Entity
+ */
+class User
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=255, nullable=false)
+     */
+    private $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="auth_key", type="string", length=32, nullable=false)
+     */
+    private $authKey;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password_hash", type="string", length=255, nullable=false)
+     */
+    private $passwordHash;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password_reset_token", type="string", length=255, nullable=true)
+     */
+    private $passwordResetToken;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     */
+    private $email;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="smallint", nullable=false)
+     */
+    private $status;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="created_at", type="integer", nullable=false)
+     */
+    private $createdAt;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="updated_at", type="integer", nullable=false)
+     */
+    private $updatedAt;
+
+
+}

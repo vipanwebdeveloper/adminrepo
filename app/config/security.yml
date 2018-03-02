@@ -1,0 +1,69 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+# app/config/security.yml
+security:
+    encoders:
+        MazeWorld\MoviesBundle\Entity\Admin:
+            algorithm:        sha1
+            encode_as_base64: false
+            iterations:       1
+
+    # http://symfony.com/doc/current/book/security.html#hierarchical-roles
+    role_hierarchy:
+        ROLE_USER:        [ROLE_USER]
+        ROLE_ADMIN:       [ROLE_USER, ROLE_ADMIN]
+        ROLE_PTADMIN:     [ROLE_PTADMIN, ROLE_ADMIN]
+        ROLE_SUPER_ADMIN: [ROLE_SUPER_ADMIN, ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        admin:
+            entity: { class: MazeWorldMoviesBundle:Admin, property: email }
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        admin:
+            switch_user: true
+            pattern: ^/
+            anonymous: ~
+            form_login:
+                login_path: /login
+                check_path: /login_check
+            remember_me:
+                key:      divine_office_hub_123456
+                lifetime: 31536000
+                always_remember_me: true
+                name: silva
+                remember_me_parameter: _remember_me
+                path: /
+                #domain: ~
+            logout:
+                path: /logout
+                invalidate_session: true
+                target: /login
+            provider: admin
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/forgot-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/reset, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/administrator/dashboard, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/administrator, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/site/tracking, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/tracking/site, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/image, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/rr, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/users/profile, roles: ROLE_USER }
+        - { path: ^/users, roles: [ROLE_ADMIN, ROLE_PTADMIN] }
+        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/dashboard, roles: ROLE_USER }
+
+        
+        
+        
+        
+        # Include the following line to also secure the /admin path itself
+        # - { path: ^/admin$, roles: ROLE_ADMIN }
+   # encoders:
+    #    Symfony\Component\Security\Core\User\User: sha1

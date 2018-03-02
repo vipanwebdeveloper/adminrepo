@@ -1,0 +1,8 @@
+Hi {{ userEntity.firstName }}!
+
+Your {%if app.session.get('accountName')%}{{app.session.get('accountName')}}{%else%}pulsetracker{%endif%} account has been created successfully.
+	
+To set your password, visit the following address:
+
+{{ url('reset_password', {'passwordResetCode' : userEntity.passwordResetCode }) }}
+    

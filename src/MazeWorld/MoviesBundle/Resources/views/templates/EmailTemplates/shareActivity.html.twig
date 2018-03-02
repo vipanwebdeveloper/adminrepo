@@ -1,0 +1,139 @@
+{% set account_display_name = visitEntity.site.account|account_display_name %}
+{% set account_logo = visitEntity.site.account|account_logo({'logo_url':'bundles/tftapp/images/logo2.png', 'login_screen':true}) %}
+
+{% if visitEntity.site.account.accountDomain %}
+    {% set webPath = visitEntity.site.account.accountDomain %}
+{% endif%}
+<!DOCTYPE html>
+
+<html>
+<head>
+<style type="text/css">
+@charset "UTF-8";
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.52857143;
+  color: #515253;
+  background-color: #fff;
+}
+
+a {
+  color: #5d9cec;
+  text-decoration: none;
+}
+a:hover,
+a:focus {
+  color: #1b72e2;
+  text-decoration: underline;
+}
+a:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+.img-circle {
+  border-radius: 50%;
+}
+
+table {
+  background-color: transparent;
+}
+th {
+  text-align: left;
+}
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 21px;
+}
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.52857143;
+  vertical-align: top;
+  border-top: 1px solid #eeeeee;
+}
+.table > thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #eeeeee;
+}
+.table > caption + thead > tr:first-child > th,
+.table > colgroup + thead > tr:first-child > th,
+.table > thead:first-child > tr:first-child > th,
+.table > caption + thead > tr:first-child > td,
+.table > colgroup + thead > tr:first-child > td,
+.table > thead:first-child > tr:first-child > td {
+  border-top: 0;
+}
+.table > tbody + tbody {
+  border-top: 2px solid #eeeeee;
+}
+.table .table {
+  background-color: #f5f7fa;
+}
+
+</style>
+<meta charset="UTF-8">
+<title>Activity Email Template</title>
+</head>
+
+<body>
+    <div align="center">
+        <table width="600px" style="background-color: transparent;">
+            <tr>
+                <td>
+                <div style="text-align: center; margin-top:21px; margin-bottom:21px" align="center">
+                <a href="{{webPath}}{{path('admin_dashboard')}}"><img alt="{{account_display_name}}" src="{{account_logo}}" border="0"></a>
+                </div>
+                    <table class="table" style="background-color: transparent;width: 100%;max-width: 100%;margin-bottom: 21px;">
+                        <tbody>
+	                        <tr>
+	                            <td>
+	                                <p><em><strong>Howdy {{ userEntity.firstName }}!</strong></p>
+	                                <p>{{user}} shared an activity with you:</em></p>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">
+	                                <p>Activity Type: {{activityEntity.activityType}}</p>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">
+	                                <p>Associations: {{association|raw}} </p>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">
+	                            	<p>Activity Details:</p>
+	                            	<p>{{activityEntity.activityDescription}}</p>
+	                            </td>
+	                        </tr>
+	                         {%if media is not empty %}
+                             <tr>
+  	                            <td colspan="2" style="padding: 8px;line-height: 1.52857143;vertical-align: top;border-top: 1px solid #eeeeee;">
+  	                            	<p>File(s) Uploaded:</p>
+  	                            	<ul>
+                                    {%for mediaFile in media %}
+  	                            	    <li>{{mediaFile|media_link|raw}}</li>
+  	                            	  {%endfor%}
+  	                            	</ul>
+  	                            </td>
+  	                        </tr>
+                          {%endif%}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+​

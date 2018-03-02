@@ -1,0 +1,663 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+        <title>{% spaceless %}{% filter custom_spaceless %}{% block title %}{%if app.session.get('accountName')%}{{app.session.get('accountName')}}{%endif%}{%if app.request.get('_route')=='admin_dashboard' or app.request.get('_route')=='admin_analytics' or app.request.get('_route')=='admin_analytics_pages' or app.request.get('_route')=='admin_analytics_sources' or app.request.get('_route')=='admin_analytics_locations' or app.request.get('_route')=='admin_analytics_technologies' or app.request.get('_route')=='admin_visitors' or app.request.get('_route')=='admin_visitors_watch_list'%}{%if app.session.get('site') %} : {{app.session.get('site').siteName -}}{%endif%}{%endif%} : {% block subTitle %}{% endblock %}{% endblock %}{% endfilter %}{% endspaceless %}</title>
+            {% if app.session.get('account').favicon %}
+            <link rel="icon" type="image/x-icon" href="{{ app.session.get('account').favicon.webUrl }}" />
+            {% else %}
+            
+			<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+            {% endif %}
+
+			<link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/spinners/css/spinners.css') }}"/>
+			<link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/spinners/css/spinner/heartbeat.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/material-design-lite/material.min.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/animate.css/animate.min.css') }}"/>   
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/whirl/dist/whirl.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/chosen_v1.2.0/chosen.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/css/bootstrap-tagsinput.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/flags/flags.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/css/jquery-ui.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/css/select2.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/x-editable-master/dist/bootstrap3-editable/css/bootstrap-editable.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/datatable-bootstrap/css/dataTables.bootstrap.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/datatables/media/css/responsive.bootstrap.min.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/datatables-editor/css/editor.dataTables.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/datatables/media/css/buttons.bootstrap.min.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/datatables/media/css/datatables.min.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/bootstrap-daterangepicker/daterangepicker.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/ika.jvectormap/jquery-jvectormap-1.2.2.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/simple-line-icons/css/simple-line-icons.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/css/bootstrap.css') }}"/>
+			<link rel="stylesheet" href="{{ asset('bundles/tftapp/css/app.css') }}" id="maincss"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/bootstrap-toggle-master/css/bootstrap-toggle.min.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/font-awesome-4.7.0/css/font-awesome.min.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/css/dropzone.css') }}"/>
+            {%if  app.user.themeCssFilePath!='' %}
+<link rel="stylesheet" href="{{app.user.themeCssFilePath}}"/>
+            {%elseif app.session.get('account').themeCssFilePath %}
+<link rel="stylesheet" href="{{app.session.get('account').themeCssFilePath}}"/>
+            {%else%}<link rel="stylesheet" href="{{ asset('bundles/tftapp/css/theme-e.css') }}"/>
+            {%endif%}
+			<link rel="stylesheet" href="{{ asset('bundles/tftmail/css/custom.css') }}" />
+			<link rel="stylesheet" href="{{ asset('bundles/tftapp/css/custom.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/css/dropzone.css') }}"/>
+			<link rel="stylesheet" href="{{ asset('bundles/tftapp/css/lightbox.css') }}"/> 
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/bootstrap-submodal/dist/bs.sm.min.css') }}"/>
+            {#<link rel="stylesheet" href="{{ asset('bundles/adesignscalendar/css/fullcalendar/fullcalendar.css') }}" />#}
+            <link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/fullcalendar/fullcalendar.css') }}" />
+           {#<link rel="stylesheet" href="{{ asset('bundles/tftapp/vendor/fullcalendar/fullcalendar.min.css') }}"/>#}
+
+			<script src="{{ asset('bundles/tftapp/js/modernizr.js') }} "></script>
+            <script src="{{ asset('bundles/tftapp/js/jquery.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/jquery-ui/jquery-1.12.1.min.js') }} "></script>
+            <script src="{{ asset('bundles/tftapp/js/bootstrap.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/js/jquery.storageapi.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/js/jquery.easing.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/js/animo.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/js/jquery.slimscroll.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/jquery-ui/ui/core.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/jquery-ui/ui/widget.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/jquery-ui/ui/mouse.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/jquery-ui/ui/draggable.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/jquery-ui/ui/droppable.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/jquery-ui/ui/sortable.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/jqueryui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/jquery-localize-i18n/dist/jquery.localize.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/ika.jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/ika.jvectormap/jquery-jvectormap-us-mill-en.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/ika.jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/js/md5.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/js/jquery.gravatar.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/datatables/media/js/jquery.datatables.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/datatables/media/js/datatables.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/js/dataTables.bootstrap.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/datatables/media/js/responsive.datatables.min.js') }}"></script>            
+            <script src="{{ asset('bundles/tftapp/js/dataTables.bootstrapPagination.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/datatables-editor/js/dataTables.editor.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/js/jszip.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/datatables-buttons/buttons.bootstrap.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/datatables-buttons/buttons.colVis.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/datatables-buttons/buttons.html5.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/datatables-buttons/buttons.print.min.js') }}"></script>        
+            <script src="{{ asset('bundles/tftapp/js/select2.min.js') }}"></script> 
+            <script src="{{ asset('bundles/tftapp/js/custom.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/chosen_v1.2.0/chosen.jquery.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/js/typeahead.bundle.js') }} "></script>
+            <script src="{{ asset('bundles/tftapp/js/bootstrap-tagsinput.js') }}"></script>
+            <script src="{{ asset('bundles/tftpagination/js/pagination.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/Flot/jquery.flot.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/Flot/jquery.flot.stack.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/flot.tooltip/js/jquery.flot.tooltip.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/Flot/jquery.flot.resize.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/Flot/jquery.flot.pie.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/Flot/jquery.flot.time.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/Flot/jquery.flot.categories.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/flot-spline/js/jquery.flot.spline.min.js') }}"></script>
+			<script src="{{ asset('bundles/tftapp/vendor/x-editable-master/dist/bootstrap3-editable/js/bootstrap-editable.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/bootstrap-daterangepicker/moment.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/Readmore.js-master/readmore.min.js') }}"></script>  
+            <script src="{{ asset('bundles/tftapp/js/formValidation.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/js/validator.js') }}"></script>
+            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+            <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+            <script src="{{ asset('bundles/tftapp/js/momentjs/moment.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/js/momentjs/momentTimezone.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/jquery.steps/build/jquery.steps.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/jquery-validation/dist/jquery.validate.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/jquery-validation/dist/additional-methods.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/bootstrap-toggle-master/js/bootstrap-toggle.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>  
+            <script src="{{ asset('bundles/tftapp/vendor/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js') }}"></script>    
+            <script src="{{ asset('bundles/tftapp/vendor/bootstrap-submodal/dist/bs.sm.min.js') }} "></script>
+            <script src="{{ asset('bundles/tftapp/js/progressbar.js') }}"></script>
+			<script src="{{ asset('bundles/tftapp/vendor/bootstrap-filestyle/src/bootstrap-filestyle.js') }} "></script>
+			<script src="{{ asset('bundles/tftapp/js/lightbox.js') }}"></script>
+			<script src="{{ asset('bundles/tftapp/js/dropzone.js') }}"></script>
+			<script src="{{ asset('bundles/tftmail/js/plugins/iCheck/icheck.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftmail/js/mailbox.js') }}"></script>
+            <script src="{{ asset('bundles/tftmail/js/jquery.form.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/vendor/material-design-lite/material.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/js/app.js') }}"></script>
+            <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+            {#<script src="{{ asset('bundles/tftapp/vendor/tinymce/js/tinymce/tinymce.min.js') }}"></script>#}
+            <script src="{{ asset('bundles/tftapp/vendor/bootstrap-filestyle/src/bootstrap-filestyle.js') }}"></script>
+            <script src="{{ asset('bundles/adesignscalendar/js/fullcalendar/fullcalendar.min.js') }}"></script>
+            <script src="{{ asset('bundles/tftapp/js/jquery.fullcalendar.min.js') }}"></script>
+            {#<script src="{{ asset('bundles/tftapp/vendor/fullcalendar/gcal.min.js') }}"></script>#}
+            
+            
+            {#<script src="//cdn.trackduck.com/toolbar/prod/td.js" async data-trackduck-id="59de244b43df03fe5f295d49"></script>#}
+            <style>
+				.fc-header-title h2 {
+					font-size: 24px;
+				}
+			</style>
+			{% block additionalstylesheets %}
+			
+            {% endblock %}
+
+            <script language="javascript">
+                {%if app.user.timeZone %}var todayDate = moment().tz("{{app.user.timeZone.zoneName}}").format();
+				var defaultTimeZone = "{{app.user.timeZone.zoneName}}";
+                {%else%}
+                    var todayDate = moment().tz("UTC").format();
+                    var defaultTimeZone = "UTC";
+                {%endif%}
+                
+                function mtz(m) {
+					{%if app.user.timeZone %}return moment.tz(m, "{{app.user.timeZone.zoneName}}");
+					{%else%}return moment.tz(m, "UTC");
+					{%endif%}}
+                
+
+                function dateFilter(dateTime) {
+                
+                    returnFormat='MMM Do h:mma';
+                    {%if (app.user.timeZone!=null) %}
+                        {%set defaultTimeZone=app.user.timeZone.zoneName%}
+                    {%else%}
+                        {%set defaultTimeZone='UTC'%}
+                    {%endif%}
+
+
+                    var newYork = moment.tz(dateTime, "UTC");
+                    var losAngeles = newYork.clone().tz("{{defaultTimeZone}}");
+                    
+                    return losAngeles.format(returnFormat);
+                }
+
+                /*
+                function dateFilter(dateTime) {
+                    console.log(dateTime);
+
+                    dateTime=parseDate(dateTime);
+                    returnFormat='MMM Do h:mma';
+                    {%if (app.user.timeZone!=null) %}
+                        {%set defaultTimeZone=app.user.timeZone.zoneName%}
+                    {%else%}
+                        {%set defaultTimeZone='UTC'%}
+                    {%endif%}
+
+                    var newYork = moment.tz(new Date(dateTime), "UTC");
+
+                    console.log(newYork);
+                    
+                    var losAngeles = newYork.clone().tz("{{defaultTimeZone}}");
+                    return losAngeles.format(returnFormat);
+                }
+
+                */
+                function parseDate(s) {
+                    var dateTime = s.split(' ');
+                    var dateBits = dateTime[0].split('-');
+                    var timeBits = dateTime[1].split(':');
+                    return new Date(dateBits[0], parseInt(dateBits[1]) - 1, dateBits[2], timeBits[0], timeBits[1], timeBits[2]).valueOf();
+                }
+                function dateFilter2(dateTime) {
+                    returnFormat='MMM D, YYYY h:mma';
+                    {%if (app.user.timeZone!=null) %}
+                        {%set defaultTimeZone=app.user.timeZone.zoneName%}
+                    {%else%}
+                        {%set defaultTimeZone='UTC'%}
+                    {%endif%}
+
+
+                    var newYork = moment.tz(dateTime, "UTC");
+                    var losAngeles = newYork.clone().tz("{{defaultTimeZone}}");
+                    
+                    return losAngeles.format(returnFormat);
+                }
+                
+                function dateFilter3(dateTime) {
+                    returnFormat='MMM D, YYYY';
+                    {%if (app.user.timeZone!=null) %}
+                        {%set defaultTimeZone=app.user.timeZone.zoneName%}
+                    {%else%}
+                        {%set defaultTimeZone='UTC'%}
+                    {%endif%}
+
+
+                    var newYork = moment.tz(dateTime, "UTC");
+                    var losAngeles = newYork.clone().tz("{{defaultTimeZone}}");
+                    
+                    return losAngeles.format(returnFormat);
+                }
+
+                function getAssetsAppBundlePath() {
+                    return "{{ asset('bundles/tftapp/') }}";
+                }
+
+                function fadeOutMsgs() {
+                    $('#alert-msgs-container').fadeOut(6000);
+                }
+
+                setTimeout(fadeOutMsgs, 2000);
+            </script>
+    {% block pageJs %}
+    {% endblock %}
+    </head>
+    <body class="layout-fixed">
+    <div id="container" style="margin: 20px; width: 200px; height: 200px; position:absolute; top:40%; left:45%; z-index:999999; overflow:hidden;"></div>
+        <div class="wrapper">
+                    <!-- START Top navbar-->
+                    <header class="topnavbar-wrapper">
+                        <!-- START Top Navbar-->
+                        <nav role="navigation" class="navbar topnavbar">
+                            <!-- START navbar header-->
+                            <div class="navbar-header">
+                                <a href="/dashboard" class="navbar-brand">
+                                    <div class="brand-logo">
+                                        {{app.session.get('account')|account_logo_block({'class':'img-responsive'})|raw}}
+                                    </div>
+                                    <div class="brand-logo-collapsed">
+                                        {{app.session.get('account')|account_logo_block({'class':'img-responsive', 'thumb':true})|raw}}
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- END navbar header-->
+                            <!-- START Nav wrapper-->
+                            <div class="nav-wrapper">
+                                <!-- START Left navbar-->
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+                                        <a href="#" data-toggle-state="aside-collapsed" class="hidden-xs">
+                                            <em class="fa fa-navicon"></em>
+                                        </a>
+                                        <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
+                                        <a href="#" data-toggle-state="aside-toggled" data-no-persist="true" class="visible-xs sidebar-toggle">
+                                            <em class="fa fa-navicon"></em>
+                                        </a>
+                                    </li>
+                                    <li class="dropdown dropdown-list">
+                                        {{ render(controller('TFTAppBundle:Admin/Base:accountListing')) }}
+                                    </li>
+                                </ul>  
+
+                                <!-- END Left navbar-->
+                                <!-- START Right Navbar-->
+                                <ul class="nav navbar-nav navbar-right">
+	                                <!-- START Search icon-->
+                                    <li>
+					                    <a href="#" data-search-open="#" title="Search">
+					                        <em class="fa fa-search"></em>
+					                    </a>
+					                </li>
+                                    <!-- END Search icon-->
+                                    <!-- START Add menu-->
+                                    <li class="dropdown dropdown-list">
+                                        <a href="#" data-toggle="dropdown">
+                                            <em class="fa fa-plus"></em>
+                                        </a>
+                                        <!-- START Dropdown menu-->
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <!-- START list group-->
+                                                <div class="list-group">
+                                                    <!-- list item-->
+                                                    <a href="javascript:void(0)" class="quick_deal list-group-item tft-show-modal" data-href="{{path('deal_new')}}">
+                                                        <div class="media-box">
+                                                            <div class="pull-left">
+                                                                <em class="fa fa-money fa-2x fa-fw text-muted"></em>
+                                                            </div>
+                                                            <div class="media-box-body clearfix">
+                                                                <p class="m0">Add a Deal</p>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <!-- list item-->
+                                                    <a href="javascript:void(0)" class="quick_event list-group-item tft-show-modal" data-href="{{path('deal_calendar_create')}}">
+                                                        <div class="media-box">
+                                                            <div class="pull-left">
+                                                                <em class="fa fa-calendar fa-2x fa-fw text-muted"></em>
+                                                            </div>
+                                                            <div class="media-box-body clearfix">
+                                                                <p class="m0">Add an Event</p>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <!-- list item-->
+                                                    <a href="javascript:void(0)" class="quick_task list-group-item tft-show-modal" data-href="{{path('tasks_new')}}">
+                                                        <div class="media-box">
+                                                            <div class="pull-left">
+                                                                <em class="fa fa-check-square-o fa-2x fa-fw text-muted"></em>
+                                                            </div>
+                                                            <div class="media-box-body clearfix">
+                                                                <p class="m0">Add a Task</p>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <!-- list item-->
+                                                    <a href="{{path('admin_contact_new')}}" class="list-group-item">
+                                                        <div class="media-box">
+                                                            <div class="pull-left">
+                                                                <em class="fa fa-user-circle-o fa-2x fa-fw text-muted"></em>
+                                                            </div>
+                                                            <div class="media-box-body clearfix">
+                                                                <p class="m0">Add a Contact</p>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <!-- list item-->
+                                                    <a href="{{path('admin_lead_new')}}" class="list-group-item">
+                                                        <div class="media-box">
+                                                            <div class="pull-left">
+                                                                <em class="fa fa-inbox fa-2x fa-fw text-muted"></em>
+                                                            </div>
+                                                            <div class="media-box-body clearfix">
+                                                                <p class="m0">Add a Lead</p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <!-- list item-->
+                                                    <a href="{{path('admin_company_new')}}" class="list-group-item">
+                                                        <div class="media-box">
+                                                            <div class="pull-left">
+                                                                <em class="fa fa-building fa-2x fa-fw text-muted"></em>
+                                                            </div>
+                                                            <div class="media-box-body clearfix">
+                                                                <p class="m0">Add a Company</p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+														{%if app.session.get('account') %}
+    														{%if app.session.get('account').emailModule %}
+                                                            <!-- list item-->
+                                                            <a href="{{path('admin_emailmarketing_new')}}" class="list-group-item">
+                                                                <div class="media-box">
+                                                                    <div class="pull-left">
+                                                                        <em class="fa fa-envelope fa-2x fa-fw text-muted"></em>
+                                                                    </div>
+                                                                    <div class="media-box-body clearfix">
+                                                                        <p class="m0">Add a Subscriber</p>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                            {%endif%}
+                                                        {%endif%}
+                                                        <!-- list item-->
+                                                        <a href="#" onclick="javascript: loadModalWindow(Routing.generate('admin_lists_new')); return false;" target="_blank" class="list-group-item">
+	                                                        <div class="media-box">
+	                                                            <div class="pull-left">
+	                                                                <em class="fa fa-list fa-2x fa-fw text-muted"></em>
+	                                                            </div>
+	                                                            <div class="media-box-body clearfix">
+	                                                                <p class="m0">Add a List</p>
+	                                                            </div>
+	                                                        </div>
+	                                                    </a>
+                                                        {% if is_granted('ROLE_ADMIN') %}
+                                                        <!-- list item-->
+                                                        <a href="{{path('admin_user_new')}}" class="list-group-item">
+                                                            <div class="media-box">
+                                                                <div class="pull-left">
+                                                                    <em class="fa fa-users fa-2x fa-fw text-muted"></em>
+                                                                </div>
+                                                                <div class="media-box-body clearfix">
+                                                                    <p class="m0">Add a User</p>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                        {%endif%}
+                                                        {% if is_granted('ROLE_ADMIN') %}
+                                                        <!-- list item-->
+                                                        <a href="{{path('admin_site_new')}}" class="list-group-item">
+                                                            <div class="media-box">
+                                                                <div class="pull-left">
+                                                                    <em class="fa fa-globe fa-2x fa-fw text-muted"></em>
+                                                                </div>
+                                                                <div class="media-box-body clearfix">
+                                                                    <p class="m0">Add a Website</p>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                        {%endif%}
+                                                </div>
+                                                <!-- END list group-->
+                                            </li>
+                                        </ul>
+                                        <!-- END Dropdown menu-->
+                                    </li>
+                                    <!-- END Add menu-->
+                                    <!-- START User menu-->
+                                    <li class="dropdown dropdown-list">
+                                        <a href="#" data-toggle="dropdown">
+                                            <em class="fa fa-user icon5rt"></em>
+                                            {% if app.user.firstname is not null %}
+                                                {{ app.user.firstname }} {{ app.user.lastname }}
+                                            {% else %}
+                                                {{ app.user.username }}    
+                                            {% endif %}
+                                        </a>
+                                        <!-- START Dropdown menu-->
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <!-- START list group-->
+                                                <div class="list-group"> {%set profileUrl = path('admin_user_profile') %}  {% if is_granted('ROLE_ADMIN') %} {%set profileUrl = path('admin_user_edit',{'id':app.user.id}) %} {%endif%}
+                                                    <!-- list item-->
+                                                    <a href="{{profileUrl}}" class="list-group-item">
+                                                        <div class="media-box">
+                                                            <div class="pull-left">
+                                                                {#<script type="text/javascript">
+                                                                    $(document).ready(function ()
+                                                                    {
+                                                                        $('#gravatar-user').empty().append($.gravatar('{{ app.user.username }}', {size: 36}));
+                                                                    });
+                                                                </script>#}
+                                                                <div id="gravatar-user">
+                                                                    {% if app.user.proPic != '' or app.user.proPic != null %}
+                                                                        <img src="{{ app.user.proPic }}" class="img-circle circle" style="width:36px; height:36px;" />
+                                                                    {% else %}
+                                                                        <img src="{{ asset('bundles/tftapp/images/mystery_man.png') }}" class="img-circle circle" style="width:36px; height:36px;" />
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-box-body clearfix">
+                                                                <p class="m0">{{ app.user.username }}</p>
+                                                                <p class="m0 text-muted">
+                                                                    <small>Edit your profile</small>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <a href="javascript:void(0);" data-href="{{path('admin_changelog')}}" data-toggle="modal" data-target="#myModal" class="tft-show-large-modal list-group-item">
+                                                        <div class="media-box">
+                                                            <div class="pull-left">
+                                                                <em class="fa fa-file-text-o fa-2x text-muted"></em>
+                                                            </div>
+                                                            <div class="media-box-body clearfix">
+                                                                <p class="m0">Changelog</p>
+                                                                <p class="m0 text-muted">
+                                                                    <small>See what's new</small>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <!-- list item-->
+                                                    <a href="{{path('admin_logout')}}" class="list-group-item">
+                                                        <div class="media-box">
+                                                            <div class="pull-left">
+                                                                <em class="fa fa-sign-out fa-2x text-muted"></em>
+                                                            </div>
+                                                            <div class="media-box-body clearfix">
+                                                                <p class="m0">Logout</p>
+                                                                <p class="m0 text-muted">
+                                                                    <small>Bye!</small>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <!-- last list item -->
+                                                </div>
+                                                <!-- END list group-->
+                                            </li>
+                                        </ul>
+                                        <!-- END Dropdown menu-->
+                                    </li>
+                                    <!-- END User menu-->                               
+                                </ul>
+                                <!-- END Right Navbar-->
+                            </div>
+                            <!-- END Nav wrapper-->
+                            <!-- START Search form-->
+                            <form role="search" action="#" class="navbar-form">
+                                <div class="form-group has-feedback">
+                                    <input type="text" placeholder="Type to search for..." class="form-control autocomplete" name="search">
+                                    <div data-search-dismiss="" class="fa fa-times form-control-feedback"></div>
+                                </div>
+                                <button type="submit" class="hidden btn btn-default">Submit</button>
+                            </form>
+                            <!-- END Search form-->
+                        </nav>
+                        <!-- END Top Navbar-->
+                    </header>
+                    <!-- Start Sidebar -->
+                    {{ render(controller('TFTAppBundle:Admin/Default:sidebar',{'routeName':app.request.attributes.get('_route'), 'fromList':app.request.attributes.get('fromList'), 'attributes':app.request.attributes})) }}
+                    <!-- END Sidebar -->
+                    {% block profile %}
+                        <!-- Main section-->
+                        <section>
+                            <!-- Page content-->
+                            <div class="content-wrapper">   
+                            {% block pageHeading %}{% endblock %}
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12" id="body-container">
+                                        {% for flashMessage in app.session.flashbag.get('success') %}
+                                            <script type="text/javascript">
+                                                notifySuccessMessage('{{flashMessage|raw}}');
+                                            </script>
+                                        {% endfor %}
+                                        {% for flashMessage in app.session.flashbag.get('error') %}
+                                            <script type="text/javascript">
+                                                notifyErrorMessage('{{flashMessage|raw}}');
+                                            </script>
+                                        {% endfor %}
+                                    {% block body %}{% endblock %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            {%endblock%}
+            <script>
+                $("#container").hide();
+
+                function ProgBar(){
+                    this.bar = null;
+                    this.setBar = function(){
+                        $("#container").show();
+
+                        this.bar = new ProgressBar.Circle('#container', {
+                            color: '#FFEA82',
+                            trailColor: '#eee',
+                            trailWidth: 1,
+                            duration: 1400,
+                            easing: 'easeIn',
+                            strokeWidth: 15,
+                            from: {color: '#3881f7', a: 0},
+                            to: {color: '#f73838', a: 1},
+                            // Set default step function for all animate calls
+                            step: function (state, circle) {
+                                circle.path.setAttribute('stroke', state.color);
+                            }
+                        });
+                    };
+
+                    this.setVal = function(value, duration){
+                        this.bar.animate(value, {
+                            duration: duration
+                        });
+                        return true;
+                    };
+
+                    this.killBar = function(bar, delay){
+                        setTimeout(function(){
+                            bar.stop();
+                            $("#container").empty();
+                            $("#container").hide();
+                        }, delay);
+                    };
+                }
+
+                function startSpinner()
+                {
+                    $("#container").addClass('heartbeat-loader');
+                    $(".wrapper").css("opacity",".3");
+                    $("#container").show();
+                }
+                function endSpinner()
+                {
+                    $("#container").removeClass('heartbeat-loader');
+                    $(".wrapper").css("opacity","1");
+                    $("#container").hide();
+                }
+
+                //window.onerror = function(message, url, lineNumber) {return true;};
+                
+                $("form.navbar-form").bind("keydown", function(e) {
+				   if (e.keyCode == 13) return false;
+				 });
+                
+            </script>
+            <!-- Page footer-->
+            <footer>
+            <span class="pull-right">v3.9.1</span>
+            </footer>
+            <!-- Page footer end-->
+        </div>	
+        <div class="modal fade in" aria-hidden="false" aria-labelledby="myModalLabel" role="dialog" tabindex="0" id="tft-modal-window">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog modal-lg vertical-align-center">
+                    <div class="modal-dialog">
+                        <div class="modal-content" id="tft-modal-window-body"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Click-path Modal  -->
+        <div class="modal fade" id="tft-large-modal-window" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog modal-lg vertical-align-center">
+
+                    <div class="modal-content" id="tft-large-modal-window-body"></div>
+                </div>                        
+            </div>                
+        </div>
+        {# confirm box before doing import rollback #}
+        <div id="modal-confirm" class="modal fade">
+            <div class="vertical-alignment-helper" style="height:100%;">
+                <div class="modal-dialog vertical-align-center">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                        <h4>Are you sure you want to rollback this import? This cannot be undone.</h4>
+                      </div>
+                      <div class="modal-footer">
+	                    <a href="#" type="button" class="close-modal mr">Cancel</a>
+                        <button type="button" data-dismiss="modal" class="btn btn-danger" id="rollback-confirm">Rollback</button>
+                        
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="ajaxNotification">
+        </div>
+    </body>
+</html>

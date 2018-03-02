@@ -1,0 +1,62 @@
+{% extends 'MazeWorldMoviesBundle::templates/login.html.twig' %}
+
+{% block body -%}
+    <div class="wrapper">
+        <div class="block-center mt-xl wd-xl">
+	    
+	    {% for flashMessage in app.session.flashbag.get('notice') %}
+		<div class="alert alert-info">{{ flashMessage|raw }}</div>
+	    {% endfor %}
+
+	    {% for flashMessage in app.session.flashbag.get('error') %}
+		<div class="alert alert-danger">{{ flashMessage|raw }}</div>
+	    {% endfor %}
+
+	    {% for flashMessage in app.session.flashbag.get('success') %}
+		<div class="alert alert-success">{{ flashMessage|raw }}</div>
+	    {% endfor %}
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    <small>{{ error.message|trans }}</small>
+                </div>
+            {% endif %}            
+
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <form method="post" action="{{ path('admin_login_check') }}" data-parsley-validate="" novalidate="">
+                        <!-- START panel-->
+                        <div class="panel panel-dark panel-flat">
+                            <div class="panel-body">
+                                <p class="text-center pv">{%trans%}SIGN IN TO CONTINUE{%endtrans%}</p>
+                                <div class="form-group has-feedback">
+                                    <input id="username" name="_username" type="email" placeholder="Enter email" autocomplete="off" required class="form-control">
+                                    <span class="fa fa-envelope form-control-feedback text-muted"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input id="password" name="_password" type="password" placeholder="Password" required class="form-control">
+                                    <span class="fa fa-lock form-control-feedback text-muted"></span>
+                                </div>
+                                <input type="hidden" name="_target_path" value="/process/login" />                            
+                                <div class="clearfix">
+                                    <div class="checkbox c-checkbox pull-left mt0">
+                                        <label>
+                                            <input type="checkbox" id="_remember_me" name="_remember_me">
+                                            <span class="fa fa-check"></span>Remember Me
+                                        </label>
+
+                                    </div>
+                                    <div class="pull-right"><a href="{{path('forgot_password')}}">Forgot Password?</a></div>
+                                </div>
+                                <button type="submit" class="btn btn-block btn-primary mt-lg">Login</button>
+
+                            </div>
+                        </div>
+                        <!-- END panel-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
