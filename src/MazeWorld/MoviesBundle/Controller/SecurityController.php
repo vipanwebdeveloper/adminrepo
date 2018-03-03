@@ -5,13 +5,25 @@ namespace MazeWorld\MoviesBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
-use MazeWorld\MoviesBundle\Entity\User;
+use MazeWorld\MoviesBundle\Entity\Admin;
 
 class SecurityController extends Controller {
 
     public function loginAction(Request $request) {
         $session = $request->getSession();
-
+/*		$user = new Admin();
+		$user->setFirstName("Vipan");
+		$user->setLastName("Kumar");
+		$user->setEmail("vipan@gmail.com");
+		$user->setPassword("admin123");
+		$user->setGender(1);
+		$user->setIsActive(1);
+		$user->setSalt('admin');
+		$user->setRoles(['ROLE_SUPER_ADMIN']);
+		$em = $this->getDoctrine()->getManager();
+		$em->persist($user);
+		$em->flush();
+die;*/
         // get the login error if there is one
         if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(

@@ -1835,7 +1835,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5a984f4767f0f3.00026935</argument>
+            <argument>5a9984874d85b7.46853569</argument>
           </service>
         </argument>
       </argument>
@@ -2340,7 +2340,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>5a984f4767f0f3.00026935</argument>
+            <argument>5a9984874d85b7.46853569</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -2934,6 +2934,7 @@
           <call method="setEntityNamespaces">
             <argument type="collection">
               <argument key="AppBundle">AppBundle\Entity</argument>
+              <argument key="MazeWorldMoviesBundle">MazeWorld\MoviesBundle\Entity</argument>
             </argument>
           </call>
           <call method="setMetadataCacheImpl">
@@ -2954,10 +2955,23 @@
                       <argument type="service" id="annotation_reader"/>
                       <argument type="collection">
                         <argument>/opt/lampp/htdocs/newcr/src/AppBundle/Entity</argument>
+                        <argument>/opt/lampp/htdocs/newcr/src/MazeWorld/MoviesBundle/Entity</argument>
                       </argument>
                     </service>
                   </argument>
                   <argument>AppBundle\Entity</argument>
+                </call>
+                <call method="addDriver">
+                  <argument type="service">
+                    <service class="Doctrine\ORM\Mapping\Driver\AnnotationDriver" public="false">
+                      <argument type="service" id="annotation_reader"/>
+                      <argument type="collection">
+                        <argument>/opt/lampp/htdocs/newcr/src/AppBundle/Entity</argument>
+                        <argument>/opt/lampp/htdocs/newcr/src/MazeWorld/MoviesBundle/Entity</argument>
+                      </argument>
+                    </service>
+                  </argument>
+                  <argument>MazeWorld\MoviesBundle\Entity</argument>
                 </call>
               </service>
             </argument>
